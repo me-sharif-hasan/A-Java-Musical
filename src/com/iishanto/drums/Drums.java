@@ -1,7 +1,6 @@
 package com.iishanto.drums;
 
-import com.iishanto.instrument.DrumSet;
-
+import com.iishanto.Settings;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -13,21 +12,19 @@ import java.util.concurrent.TimeUnit;
 public class Drums {
     Map <String,Boolean> activeKeys=new HashMap<>();
     Map <String,ImageIcon> saved=new HashMap<>();
-    private final DrumSet drumSet;
     private final int windowHeight;
     private final int windowWidth;
     private JFrame jFrame;
     private JLabel bg;
 
-    public Drums(DrumSet drumSet){
+    public Drums(){
         windowWidth= (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth()/1.0);
         windowHeight= (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight()/1.0);
-        this.drumSet=drumSet;
         init();
     }
     private void init(){
         jFrame=new JFrame("A Java Musical: Drummer");
-        jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.requestFocusInWindow();
         bg=new JLabel();
         jFrame.setContentPane(bg);
@@ -58,7 +55,7 @@ public class Drums {
 
                 for(Map.Entry<String,Boolean> keyPair:activeKeys.entrySet()){
                     if(keyPair.getValue()) {
-                        drumSet.hit(keyPair.getKey());
+                        Settings.getInstance().getSignal().write("drums",keyPair.getKey());
                     }
                 }
             }

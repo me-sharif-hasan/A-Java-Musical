@@ -1,6 +1,7 @@
 package com.iishanto.instrument;
 
 import com.iishanto.player.MusicPlayer;
+import com.iishanto.signal.Signal;
 
 import javax.sound.sampled.*;
 import java.io.IOException;
@@ -17,7 +18,6 @@ public class DrumSet {
         mp.put(" ","tom_floor");
         mp.put("N","cymbal_hi_hats");
         mp.put("Z","cymbal_ride");
-
     }
     public void hit(String s){
         s=s.toUpperCase();
