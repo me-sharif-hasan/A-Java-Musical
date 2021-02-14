@@ -22,6 +22,22 @@ public class Drums {
         windowHeight= (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight()/1.0);
         init();
     }
+
+    void updateBgInThread(String image){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                updateBg(image);
+                try {
+                    TimeUnit.MILLISECONDS.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                updateBg("sprite_1");
+            }
+        }).start();
+    }
+
     private void init(){
         jFrame=new JFrame("A Java Musical: Drummer");
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,13 +60,27 @@ public class Drums {
                 key=key.toUpperCase();
                 activeKeys.put(key,true);
                 switch (key) {
-                    case "M" -> updateBg("sprite_7");
-                    case "X" -> updateBg("sprite_5");
-                    case "C" -> updateBg("sprite_4");
-                    case "B" -> updateBg("sprite_3");
-                    case " " -> updateBg("sprite_2");
-                    case "N" -> updateBg("sprite_6");
-                    case "Z" -> updateBg("sprite_8");
+                    case "M":
+                        updateBg("sprite_7");
+                        break;
+                    case "X":
+                        updateBg("sprite_5");
+                        break;
+                    case "C":
+                        updateBg("sprite_4");
+                        break;
+                    case "B":
+                        updateBg("sprite_3");
+                        break;
+                    case " ":
+                        updateBg("sprite_2");
+                        break;
+                    case "N":
+                        updateBg("sprite_6");
+                        break;
+                    case "Z":
+                        updateBg("sprite_8");
+                        break;
                 }
 
                 for(Map.Entry<String,Boolean> keyPair:activeKeys.entrySet()){

@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
-import java.util.Set;
 
 public class Server {
     int port;
@@ -17,7 +16,7 @@ public class Server {
         port= Settings.getInstance().getPort();
         signalProcessor=new SignalProcessor();
     }
-
+    boolean stop=false;
     public void run(){
         try {
             ServerSocket serverSocket=new ServerSocket(port);
@@ -25,6 +24,7 @@ public class Server {
                 @Override
                 public void run() {
                     while (true){
+                        if(stop) break;
                         Socket socket= null;
                         try {
                             socket = serverSocket.accept();
@@ -53,5 +53,8 @@ public class Server {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public void stop(){
+        stop=true;
     }
 }

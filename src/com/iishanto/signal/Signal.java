@@ -10,12 +10,15 @@ import java.net.Socket;
 public class Signal {
     DrumSet drumSet;
     Socket socket=null;
+    public boolean isConnected=false;
     public Signal(){
         drumSet=new DrumSet();
         try {
             socket=new Socket("localhost", Settings.getInstance().getPort());
+            isConnected=true;
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error: "+e.getLocalizedMessage());
+            isConnected=false;
         }
     }
     public void write(String instrument,String signal){
