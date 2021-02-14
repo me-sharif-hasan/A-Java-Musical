@@ -81,7 +81,7 @@ public class PianoJFrame extends javax.swing.JFrame {
         CHButton.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         CHButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //CHButtonActionPerformed(evt);
+                Settings.getInstance().getSignal().write("piano","C_s");
             }
         });
         jPanel1.add(CHButton);
@@ -172,7 +172,7 @@ public class PianoJFrame extends javax.swing.JFrame {
         FHButton.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         FHButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Settings.getInstance().getSignal().write("piano","F_s1");
+                Settings.getInstance().getSignal().write("piano","F_s");
             }
         });
         jPanel1.add(FHButton);
@@ -194,7 +194,7 @@ public class PianoJFrame extends javax.swing.JFrame {
         GHBotton.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         GHBotton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Settings.getInstance().getSignal().write("piano","G_s1");
+                Settings.getInstance().getSignal().write("piano","G_s");
             }
         });
         jPanel1.add(GHBotton);
