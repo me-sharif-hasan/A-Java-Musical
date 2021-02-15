@@ -2,6 +2,7 @@ package com.iishanto;
 
 import com.iishanto.Backend.FrontEndServer;
 import com.iishanto.Backend.Server;
+import com.iishanto.Guitar.GuitarUI;
 import com.iishanto.drums.Drums;
 import com.iishanto.instrument.PianoCore;
 import com.iishanto.piano.PianoJFrame;
@@ -16,5 +17,6 @@ public class Main{
     new FrontEndServer();
     new Drums();
     new PianoJFrame().showPiano();
+    new GuitarUI().showGuitar();
     }
 }
