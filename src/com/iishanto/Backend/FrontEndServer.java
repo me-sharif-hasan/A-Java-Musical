@@ -21,10 +21,8 @@ public class FrontEndServer {
         jFrame.setResizable(false);
 
         JPanel jPanel1=new JPanel(null);
-        JPanel jPanel2=new JPanel(null);
 
         jPanel1.setBounds(0,0,jFrame.getWidth(),jFrame.getHeight());
-        jPanel2.setBounds(jPanel1.getBounds());
         
         JLabel heading=new JLabel();
         int y=(int)Settings.getInstance().percent(35,jPanel1.getHeight());
@@ -66,8 +64,7 @@ public class FrontEndServer {
             @Override
             public void actionPerformed(ActionEvent e) {
                 runServer();
-                jPanel1.setVisible(false);
-                jPanel2.setVisible(true);
+                jFrame.setVisible(false);
             }
         });
 
@@ -86,14 +83,13 @@ public class FrontEndServer {
     }
 
     boolean state=false;
-    private void runServer(){
-        Server server=new Server();
-        if(!state) {
+    private void runServer() {
+        Server server = new Server();
+        if (!state) {
             server.run();
-            state=true;
-        }
-        else {
-            state=false;
+            state = true;
+        } else {
+            state = false;
             server.stop();
         }
     }

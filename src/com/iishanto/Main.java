@@ -3,6 +3,7 @@ package com.iishanto;
 import com.iishanto.Backend.FrontEndServer;
 import com.iishanto.Backend.Server;
 import com.iishanto.Guitar.GuitarUI;
+import com.iishanto.Vocal.Vocal;
 import com.iishanto.drums.Drums;
 import com.iishanto.instrument.PianoCore;
 import com.iishanto.piano.PianoJFrame;
@@ -15,8 +16,9 @@ public class Main{
 
     public static void main(String[] args) throws IOException, UnsupportedAudioFileException {
     new FrontEndServer();
-    new Drums();
-    new PianoJFrame().showPiano();
-    new GuitarUI().showGuitar();
+    //new PianoJFrame().showPiano();
+    //new GuitarUI().showGuitar();
+        new Vocal("A Java Musical: Vocal").showVocal();
+      //  new Drums().playRandom();
     }
 }
