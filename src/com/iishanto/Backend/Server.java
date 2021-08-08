@@ -20,6 +20,7 @@ public class Server {
     public void run(){
         try {
             ServerSocket serverSocket=new ServerSocket(port);
+            Settings.getInstance().setLog("Server running at port "+port);
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -51,6 +52,7 @@ public class Server {
                 }
             }).start();
         } catch (Exception e) {
+            Settings.getInstance().setLog(e.getLocalizedMessage());
             e.printStackTrace();
         }
     }

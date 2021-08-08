@@ -42,6 +42,7 @@ public class GuitarUI{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         guitar=new JFrame();
+        guitar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         guitar.setResizable(false);
         addKeyEvent(guitar);
 

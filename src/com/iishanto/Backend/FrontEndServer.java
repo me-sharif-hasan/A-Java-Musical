@@ -17,6 +17,7 @@ public class FrontEndServer {
     }
     void init(){
         JFrame jFrame=new JFrame("A Java Musical");
+        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.setSize(windowWidth,windowHeight);
         jFrame.setResizable(false);
 
@@ -41,17 +42,6 @@ public class FrontEndServer {
         JTextField port=new JTextField();
         port.setBounds(x1,y+90,100,30);
         jPanel1.add(port);
-
-        JLabel passLabel=new JLabel();
-        passLabel.setText("Enter the password");
-        passLabel.setBounds(x1-250,y+140,350,30);
-        jPanel1.add(passLabel);
-
-        JTextField pass=new JTextField();
-        pass.setBounds(x1,y+140,100,30);
-
-        jPanel1.add(pass);
-
 
         jPanel1.add(heading);
 

@@ -125,32 +125,38 @@ public class Drums {
     }
 
     public void playRandom(){
-        try {
-            Robot robot=new Robot();
-            Map<Integer,String> mp=new HashMap<>();
-            mp.put(0,"Z");
-            mp.put(1,"X");
-            mp.put(2,"C");
-            mp.put(3," ");
-            mp.put(4,"B");
-            mp.put(5,"M");
-            mp.put(6,"N");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Robot robot=new Robot();
+                    Map<Integer,String> mp=new HashMap<>();
+                    mp.put(0,"Z");
+                    mp.put(1,"X");
+                    mp.put(2,"C");
+                    mp.put(3," ");
+                    mp.put(4,"B");
+                    mp.put(5,"M");
+                    mp.put(6,"N");
 
-            for(int i=1;;i++){
+                    for(int i=1;;i++){
 
-                int selected= (int) ((Math.random()*1000)%7);
-                char ch=mp.get(selected).charAt(0);
-                if(jFrame.isFocused()) {
-                    robot.keyPress(ch);
-                    TimeUnit.MILLISECONDS.sleep(200);
+                        int selected= (int) ((Math.random()*1000)%7);
+                        char ch=mp.get(selected).charAt(0);
+                        if(jFrame.isFocused()) {
+                            robot.keyPress(ch);
+                            TimeUnit.MILLISECONDS.sleep(200);
+                        }
+                        robot.keyRelease(ch);
+                        TimeUnit.MILLISECONDS.sleep(10);
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                robot.keyRelease(ch);
-                TimeUnit.MILLISECONDS.sleep(10);
-
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        }).start();
+
     }
 
 }

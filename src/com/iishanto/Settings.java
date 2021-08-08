@@ -9,11 +9,16 @@ public class Settings {
     private Signal signal=null;
     private int serverPort=8080;
     private int wWidth,wHeight;
+    String log;
     private Settings(){
         wHeight=(int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight()/1.0);
         wWidth=(int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth()/1.0);
         System.out.println(wHeight+" "+wWidth);
     }
+    public void setLog(String log){
+        this.log=log;
+    }
+    public String getLog(){return log;}
     public Signal getSignal(){
         if(signal==null|| !signal.isConnected){
             signal=new Signal();
@@ -33,6 +38,9 @@ public class Settings {
     }
     public int getPort(){
         return serverPort;
+    }
+    public void setServerPort(int port){
+        this.serverPort=port;
     }
     public static Settings getInstance(){
         if(settings==null) {

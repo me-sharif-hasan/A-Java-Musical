@@ -12,7 +12,7 @@ public class MusicPlayer {
 
     Map<String,AudioInputStream> notes=new HashMap<>();
     public MusicPlayer(){
-        format = null;
+        format = new AudioFormat(44100,16,2,true,true);;
         DataLine.Info micInfo = new DataLine.Info(TargetDataLine.class, format);
         DataLine.Info speakerInfo= new DataLine.Info(SourceDataLine.class, format);
         try {
@@ -27,11 +27,12 @@ public class MusicPlayer {
             format=audioInputStream.getFormat();
             speaker.open(format);
             speaker.start();
-            byte []data = new byte[1024000];
+            byte []data = new byte[1024*1000];
             try {
-                int len=audioInputStream.read(data);
-                if(len==-1) return;
-                speaker.write(data,0,len);
+                int len = audioInputStream.read(data,0,data.length);
+                if (len == -1) return;
+                speaker.write(data, 0, len);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

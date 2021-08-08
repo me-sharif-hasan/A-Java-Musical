@@ -15,10 +15,6 @@ import java.io.IOException;
 public class Main{
 
     public static void main(String[] args) throws IOException, UnsupportedAudioFileException {
-    new FrontEndServer();
-    //new PianoJFrame().showPiano();
-    //new GuitarUI().showGuitar();
-        new Vocal("A Java Musical: Vocal").showVocal();
-      //  new Drums().playRandom();
+        new MainWindow();
     }
 }
