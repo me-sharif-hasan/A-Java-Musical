@@ -23,6 +23,7 @@ public class GuitarUI{
     JFrame guitar=null;
     boolean ctrl=false;
     public GuitarUI() {
+        connect();
         initComponents();
 
         btn1.setOpaque(false);
@@ -395,4 +396,16 @@ public class GuitarUI{
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
+
+    public void connect(){
+        String ip=JOptionPane.showInputDialog("input ip address: ");
+        String port=JOptionPane.showInputDialog("input port: ");
+        Settings.getInstance().setServerPort(Integer.parseInt(port));
+        Settings.getInstance().setIp(ip);
+
+        if(!Settings.getInstance().demo_connect()){
+           connect();
+        }
+    }
+
 }

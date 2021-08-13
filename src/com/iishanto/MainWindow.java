@@ -38,7 +38,7 @@ public class MainWindow extends JFrame {
         drums.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new Drums().playRandom();
+                new Drums();
                 setVisible(false);
             }
         });

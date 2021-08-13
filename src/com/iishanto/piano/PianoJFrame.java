@@ -7,6 +7,7 @@ package com.iishanto.piano;
  */
 import com.iishanto.Settings;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -30,6 +31,7 @@ public class PianoJFrame extends javax.swing.JFrame {
     //AudioDataStream loop = null;
 
     public PianoJFrame() {
+        connect();
         initComponents();
         setSize(700,380);
     }
@@ -351,4 +353,15 @@ public class PianoJFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jchkMusic;
     // End of variables declaration//GEN-END:variables
+
+    public void connect(){
+        String ip= JOptionPane.showInputDialog("input ip address: ");
+        String port=JOptionPane.showInputDialog("input port: ");
+        Settings.getInstance().setServerPort(Integer.parseInt(port));
+        Settings.getInstance().setIp(ip);
+
+        if(!Settings.getInstance().demo_connect()){
+            connect();
+        }
+    }
 }

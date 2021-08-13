@@ -29,6 +29,7 @@ public class Vocal extends JFrame {
     AdvancedPlayer advancedPlayer=null;
     InputStream inputStream;
     boolean state=true;
+    JButton port_btn=null;
     class Paint extends JComponent{
         Image image;
         public Paint(Image i){
@@ -76,9 +77,10 @@ public class Vocal extends JFrame {
             }
         });
         JTextField port_field=new JTextField();
+        port_field.setText("8080");
         port_field.setBounds(jfc.getWidth()+150,400,100,50);
         add(port_field);
-        JButton port_btn=new JButton();
+        port_btn=new JButton();
         port_btn.setText("Run server");
         port_btn.setBounds(jfc.getWidth()+310,400,200,50);
         add(port_btn);
@@ -147,18 +149,23 @@ public class Vocal extends JFrame {
     public void showVocal(){
         setVisible(true);
     }
-
-
-    boolean server_state=false;
+    Server server;
     private void runServer() {
-        Server server = new Server();
-        if (!server_state) {
+
+        System.out.println(Settings.getInstance().isServerState());
+        if (!Settings.getInstance().isServerState()) {
+            server = new Server();
             server.run();
-            server_state = true;
+            port_btn.setText("Stop server");
+            System.out.println("Server started");
         } else {
-            server_state = false;
-            server.stop();
+            if(server!=null) {
+                server.stop();
+                port_btn.setText("Run server");
+                System.out.println("server closed");
+            }
         }
+        System.out.println(Settings.getInstance().isServerState());
         jLabel.setText("<html><font color='white' style='font-size:15px;'>"+Settings.getInstance().getLog()+"</font></html>");
     }
 

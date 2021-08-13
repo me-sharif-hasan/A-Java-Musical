@@ -14,7 +14,7 @@ public class Signal {
     public Signal(){
         drumSet=new DrumSet();
         try {
-            socket=new Socket("localhost", Settings.getInstance().getPort());
+            socket=new Socket(Settings.getInstance().getIp(), Settings.getInstance().getPort());
             isConnected=true;
         } catch (IOException e) {
             System.out.println("Error: "+e.getLocalizedMessage());
@@ -25,7 +25,8 @@ public class Signal {
         try {
             socket.getOutputStream().write((instrument+":"+signal+"\n").getBytes());
         } catch (IOException e) {
-            e.printStackTrace();
+            isConnected=false;
+            System.out.println("Signal write error: "+e.getLocalizedMessage());
         }
     }
 

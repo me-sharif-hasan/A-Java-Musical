@@ -18,6 +18,7 @@ public class Drums {
     private JLabel bg;
 
     public Drums(){
+        connect();
         windowWidth= (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth()/1.0);
         windowHeight= (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight()/1.0);
         init();
@@ -158,5 +159,14 @@ public class Drums {
         }).start();
 
     }
+    public void connect(){
+        String ip=JOptionPane.showInputDialog("input ip address: ");
+        String port=JOptionPane.showInputDialog("input port: ");
+        Settings.getInstance().setServerPort(Integer.parseInt(port));
+        Settings.getInstance().setIp(ip);
 
+        if(!Settings.getInstance().demo_connect()){
+            connect();
+        }
+    }
 }

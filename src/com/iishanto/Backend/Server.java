@@ -2,9 +2,8 @@ package com.iishanto.Backend;
 
 import com.iishanto.Settings;
 import com.iishanto.player.SignalProcessor;
-import com.iishanto.signal.Signal;
-
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
@@ -12,44 +11,48 @@ import java.util.Scanner;
 public class Server {
     int port;
     SignalProcessor signalProcessor;
+    ServerSocket serverSocket;
     public Server(){
         port= Settings.getInstance().getPort();
-        signalProcessor=new SignalProcessor();
+        try {
+            serverSocket=new ServerSocket(port);
+            signalProcessor=new SignalProcessor();
+            Settings.getInstance().setLog("Server started at port "+port+"<br>IP: "+ InetAddress.getLocalHost().getHostAddress());
+            Settings.getInstance().setServerState(true);
+        } catch (IOException e) {
+            Settings.getInstance().setLog(e.getLocalizedMessage());
+            e.printStackTrace();
+        }
     }
     boolean stop=false;
     public void run(){
         try {
-            ServerSocket serverSocket=new ServerSocket(port);
-            Settings.getInstance().setLog("Server running at port "+port);
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    while (true){
-                        if(stop) break;
-                        Socket socket= null;
-                        try {
-                            socket = serverSocket.accept();
-                            Socket finalSocket = socket;
-                            new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Scanner scanner= null;
-                                    try {
-                                        scanner = new Scanner(finalSocket.getInputStream());
-                                        while (scanner.hasNextLine()){
-                                            String line=scanner.nextLine();
-                                            signalProcessor.playSignal(line);
-                                        }
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
+            new Thread(() -> {
+                while (!stop && !serverSocket.isClosed()) {
+                    Socket socket;
+                    try {
+                        socket = serverSocket.accept();
+                        Socket finalSocket = socket;
+                        new Thread(() -> {
+                            Scanner scanner;
+                            try {
+                                scanner = new Scanner(finalSocket.getInputStream());
+                                while (scanner.hasNextLine()&&!serverSocket.isClosed()) {
+                                    String line = scanner.nextLine();
+                                    signalProcessor.playSignal(line);
                                 }
-                            }).start();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                                scanner.close();
+                                socket.close();
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }).start();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
+                Settings.getInstance().setServerState(false);
             }).start();
         } catch (Exception e) {
             Settings.getInstance().setLog(e.getLocalizedMessage());
@@ -58,5 +61,18 @@ public class Server {
     }
     public void stop(){
         stop=true;
+        if(serverSocket==null) {
+            System.out.println("Server socket is null");
+            return;
+        }
+        try {
+            serverSocket.close();
+            Settings.getInstance().setServerState(false);
+            Settings.getInstance().setLog("Server closed");
+            stop=false;
+        } catch (IOException e) {
+            Settings.getInstance().setLog(e.getLocalizedMessage());
+            stop=true;
+        }
     }
 }
